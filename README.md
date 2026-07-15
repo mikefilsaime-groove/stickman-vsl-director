@@ -2,7 +2,7 @@
 
 Turn any video sales letter into a timed, image-by-image production plan with exact voiceover ownership, consistent art direction, and generation-ready prompts.
 
-**Live portal:** `SITE_URL_PENDING`
+**Live portal:** [stickman-vsl-director.mikefilsaime.chatgpt.site](https://stickman-vsl-director.mikefilsaime.chatgpt.site)
 
 **Reference video:** [Watch the analyzed YouTube example](https://www.youtube.com/watch?v=nv7HuwnofW0)
 
