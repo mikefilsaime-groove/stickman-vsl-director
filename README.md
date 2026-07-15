@@ -1,0 +1,120 @@
+# Stickman VSL Director
+
+Turn any video sales letter into a timed, image-by-image production plan with exact voiceover ownership, consistent art direction, and generation-ready prompts.
+
+**Live portal:** `SITE_URL_PENDING`
+
+**Reference video:** [Watch the analyzed YouTube example](https://www.youtube.com/watch?v=nv7HuwnofW0)
+
+## What This Skill Does
+
+Stickman VSL Director converts a script into a visual production manifest. It decides where the image changes belong, what concept each image should communicate, which composition makes that concept readable, and exactly which voiceover words play over every slide.
+
+The default image-generation route is **GPT Image 2 through the Codex subscription**. Gen Media is optional when you deliberately want a different model such as Nano Banana 2 or SeedDream 5.0.
+
+The skill produces:
+
+- A numbered slide manifest with in/out timing.
+- The exact voiceover assigned to every image.
+- A visual concept and emotional job for each slide.
+- Model-ready image prompts with continuity constraints.
+- Layout direction for single scenes, contrasts, grids, timelines, and diagrams.
+- A production contract that can be rendered into a timed slideshow.
+
+## Reference Calibration
+
+The included calibration study was measured from the example video—not estimated.
+
+| Measurement | Result |
+| --- | ---: |
+| Spoken words | 3,125 |
+| Sentences | 240 |
+| Visual slides | 233 |
+| Detected transitions | 232 |
+| Images per minute | 11.453 |
+| Images per word | 0.07456 |
+| Words per image | 13.412 |
+| Average image hold | 5.239 seconds |
+| Median image hold | 4.800 seconds |
+| Structural images per sentence | 0.971 |
+| Structural sentences per image | 1.030 |
+
+These numbers calibrate pacing. They are not a rigid formula: the skill changes visuals at semantic and emotional beats.
+
+## How Concept Selection Works
+
+For every voiceover beat, the skill identifies:
+
+1. The literal subject.
+2. The persuasive job: problem, proof, contrast, mechanism, benefit, objection, or action.
+3. The emotional turn: worry, surprise, curiosity, confidence, relief, urgency, or delight.
+4. The clearest visual device: character scene, metaphor, comparison, expression grid, process, timeline, or annotated diagram.
+5. The continuity constraints inherited from the style bible.
+
+That decision becomes one slide brief with a single dominant idea, an image prompt, timing, and the exact words the image owns.
+
+## Install
+
+Clone the repository:
+
+```bash
+git clone https://github.com/mikefilsaime-groove/stickman-vsl-director.git
+```
+
+Install it in Codex:
+
+```bash
+cp -R stickman-vsl-director ~/.codex/skills/
+```
+
+The folder is also compatible with installations that discover skills through `~/.claude/skills/`.
+
+## Use
+
+Invoke the skill with a script or transcript:
+
+```text
+Use $stickman-vsl-director on this script. Create a timed slide manifest,
+quote the exact voiceover for every image, and render with GPT Image 2
+through my Codex subscription.
+```
+
+You can also request planning only:
+
+```text
+Use $stickman-vsl-director to analyze this VSL and deliver the complete
+slide manifest, but do not generate images yet.
+```
+
+## Included Files
+
+```text
+SKILL.md
+agents/openai.yaml
+references/
+  production-contract.md
+  reference-calibration.md
+  style-bible.md
+scripts/
+  analyze_reference.py
+  plan_slides.py
+  render_slideshow.py
+```
+
+The repository also contains the source for the public tabbed portal in `app/`.
+
+## Rendering Routes
+
+| Route | Use |
+| --- | --- |
+| GPT Image 2 via Codex | Default. Uses the image generation included with the Codex subscription. |
+| Gen Media | Optional. Use when a named external model or specialized capability is requested. |
+| Planning only | Produces the complete manifest without generating images. |
+
+## Skill Hub
+
+This skill is also indexed in [Mike Filsaime's public AI Skills Library](https://github.com/mikefilsaime-groove/mikefilsaime-skills).
+
+## License
+
+MIT

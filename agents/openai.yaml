@@ -1,0 +1,4 @@
+interface:
+  display_name: "Stickman VSL Director"
+  short_description: "Turn VSL scripts into timed stickman slides"
+  default_prompt: "Use $stickman-vsl-director to turn this VSL script into a timed, image-ready slide plan."
