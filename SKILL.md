@@ -1,6 +1,6 @@
 ---
 name: stickman-vsl-director
-description: Turn any video sales letter, narration, script, transcript, or voiceover into a timed slide-by-slide stickman explainer in the visual grammar of the analyzed reference video. Use for VSL image planning, “voiceover reads on this image” manifests, facial-expression direction, 2×2 grids, comparison panels, timelines, infographic concepts, Codex subscription image generation with GPT Image 2 by default, optional GenMedia generation with Nano Banana 2/Pro, SeedDream 5.0, or another chosen model, and optional static-slide video rendering synchronized to audio.
+description: Turn any video sales letter, narration, script, transcript, or voiceover into a timed slide-by-slide stickman explainer with a required choice between Simple & Cute and Full-Color & Expressive art direction. Use for VSL image planning, “voiceover reads on this image” manifests, facial-expression direction, 2×2 grids, comparison panels, timelines, infographic concepts, Codex subscription image generation with GPT Image 2 by default, optional GenMedia generation with Nano Banana 2/Pro, SeedDream 5.0, or another chosen model, and optional static-slide video rendering synchronized to audio.
 ---
 
 # Stickman VSL Director
@@ -13,7 +13,8 @@ Read both references before planning:
 
 - `references/style-bible.md` for style, expression, concept, layout, prompting, and QA rules.
 - `references/reference-calibration.md` for measured pacing and narration/image ratios.
-- `references/style-atlas/reference-atlas.md` before image generation so the correct visual references are attached without loading the full atlas unnecessarily.
+- `references/art-direction-profiles.md` for the mandatory visual-direction choice and profile-specific prompt blocks.
+- `references/style-atlas/reference-atlas.md` before Full-Color & Expressive image generation so the correct visual references are attached without loading the full atlas unnecessarily.
 
 Read `references/production-contract.md` before generating images, handing off to GenMedia, or rendering a slideshow.
 
@@ -27,6 +28,17 @@ Infer the narrowest useful scope from the request:
 4. **Produce:** only after explicit post-storyboard approval, record the approval and render the slide sequence with final voiceover audio.
 
 Do not generate paid images or render a video when the user requested only a storyboard or prompt plan.
+
+## Require the art-direction choice
+
+For plan, generate, or produce scope, require one explicit profile before creating an art-directed manifest:
+
+- `simple-cute`: warm cream backgrounds, restrained accents, blue rectangular torso, generous whitespace, softer cute expressions;
+- `full-color-expressive`: saturated full-frame environments, true stick bodies, bigger reactions, denser storytelling, and more humor.
+
+If the user has not already chosen, use the exact choice prompt in `references/art-direction-profiles.md`, include its public comparison link, and wait for the answer. Do not pick a default, infer a choice from the script, or blend the profiles. Analyze-only work does not require this gate.
+
+Record the choice as `project.art_direction_profile` in `slide-manifest.json` and show it in `slide-manifest.md`, the style anchor, QA report, and storyboard review deck.
 
 ## Normalize inputs
 
@@ -58,6 +70,8 @@ python3 scripts/plan_slides.py \
   --script /absolute/path/source-script.txt \
   --output-dir /absolute/path/project \
   --title "Project title" \
+  --art-direction-profile "simple-cute" \
+  --art-direction-selection-note "User selected Option 1 — Simple & Cute." \
   --model "gpt-image-2" \
   --generation-route "codex-built-in-image-gen"
 ```
@@ -96,16 +110,14 @@ Use a deliberate composition rhythm:
 
 Preserve the exact heading **Voiceover reads on this image** in the readable manifest.
 
-## Route the visual reference pack
+## Route the selected visual reference pack
 
-Before the first image-generation call, read `references/style-atlas/reference-atlas.md` and use its page-routing table.
+Before the first image-generation call, read `references/art-direction-profiles.md` and obey the selected profile.
 
-- Always include `references/style-atlas/model-ready-palette-and-style-lock.jpg`.
-- Add the core-character, animal, and environment pages required by the current slide.
-- Add only one structural page for panels, diagrams, comedy, emotion, or dense educational boards.
-- Prefer 2–4 relevant reference images per generation. Do not attach the 20-page complete atlas to every request.
-- Use `references/style-atlas/model-ready-manifest.csv` to locate a more specific individual frame when a slide needs an exact expression, animal, environment, or layout reference.
-- Treat `references/style-atlas/original-video-complete-slide-atlas.pdf` as the searchable evidence library, not the default generation payload.
+- For `simple-cute`, always attach `references/art-direction-profiles/simple-cute-style-anchor.jpg`. Keep the cream stage, blue rectangular torso, restrained color, and low density stable.
+- For `full-color-expressive`, attach `references/art-direction-profiles/full-color-expressive-style-anchor.jpg`, then follow `references/style-atlas/reference-atlas.md` and add only the 1–3 most relevant atlas references.
+- Never attach the Full-Color atlas to a Simple & Cute generation; it will pull the model toward saturated backgrounds and thin stick torsos.
+- Prefer 1–4 focused references per generation. Use a reference as art direction, not as a frame to reproduce literally.
 
 Use references as art direction and continuity guidance. Generate a new original scene for the user's script; do not reproduce an individual source frame literally.
 
@@ -118,6 +130,8 @@ Create one project style anchor containing:
 - recurring props and locations;
 - fixed palette and line weight;
 - a 3×3 facial-expression grid.
+
+Label the anchor with the selected profile internally and reject it if character construction or background allocation drifts into the other profile.
 
 Generate three proof slides: a single scene, a 2×2 grid, and a diagram/timeline. Obtain approval before a large paid batch unless the user explicitly directs generation without a proof gate.
 
@@ -139,7 +153,7 @@ Use Nano Banana 2 when the user explicitly prefers it or its reference-editing b
 
 ## Validate every result
 
-Check concept clarity, expression, continuity, grid structure, palette, line style, labels, aspect ratio, safe margins, and unwanted text. Retry only failed slides. Preserve approved slide numbers and files.
+Check concept clarity, expression, continuity, grid structure, selected-profile fidelity, palette, line style, labels, aspect ratio, safe margins, and unwanted text. Retry only failed slides. Preserve approved slide numbers and files.
 
 Create `qa-report.md` listing each slide as approved, revised, or blocked. Do not mark the batch complete while any manifest field or required image is missing.
 

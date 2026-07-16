@@ -4,17 +4,27 @@ Turn any video sales letter into a timed, image-by-image production plan with ex
 
 **Live portal:** [stickman-vsl-director.mikefilsaime.chatgpt.site](https://stickman-vsl-director.mikefilsaime.chatgpt.site)
 
+**Compare both art directions:** [Simple & Cute vs. Full-Color & Expressive](https://stickman-vsl-director.mikefilsaime.chatgpt.site/#styles)
+
 **Reference video:** [Watch the analyzed YouTube example](https://www.youtube.com/watch?v=nv7HuwnofW0)
 
 ## What This Skill Does
 
 Stickman VSL Director converts a script into a visual production manifest. It decides where the image changes belong, what concept each image should communicate, which composition makes that concept readable, and exactly which voiceover words play over every slide.
 
+Before art direction begins, the skill requires the user to choose one of two complete workflows:
+
+- **Option 1 — Simple & Cute:** warm cream backgrounds, restrained accent colors, generous negative space, a compact blue-body character, and softer charming expressions.
+- **Option 2 — Full-Color & Expressive:** saturated full-frame environments, true stick bodies, larger emotional reactions, denser visual metaphors, and more physical humor.
+
+The two public example storyboards use the same audio and identical 23-slide timing, so the comparison isolates the art direction rather than the script or pacing.
+
 The default image-generation route is **GPT Image 2 through the Codex subscription**. Gen Media is optional when you deliberately want a different model such as Nano Banana 2 or SeedDream 5.0.
 
 The skill produces:
 
 - A numbered slide manifest with in/out timing.
+- A recorded `simple-cute` or `full-color-expressive` art-direction choice.
 - The exact voiceover assigned to every image.
 - A visual concept and emotional job for each slide.
 - Model-ready image prompts with continuity constraints.
@@ -87,7 +97,7 @@ Invoke the skill with a script or transcript:
 ```text
 Use $stickman-vsl-director on this script. Create a timed slide manifest,
 quote the exact voiceover for every image, and render with GPT Image 2
-through my Codex subscription.
+through my Codex subscription. Ask me to choose the visual direction first.
 ```
 
 You can also request planning only:
@@ -103,6 +113,7 @@ slide manifest, but do not generate images yet.
 SKILL.md
 agents/openai.yaml
 references/
+  art-direction-profiles.md
   production-contract.md
   reference-calibration.md
   style-bible.md
@@ -117,6 +128,8 @@ scripts/
   plan_slides.py
   render_slideshow.py
 ```
+
+The profile reference anchors live in `references/art-direction-profiles/`. The Full-Color & Expressive workflow additionally uses the routed source-video atlas.
 
 The repository also contains the source for the public tabbed portal in `app/`.
 

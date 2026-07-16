@@ -9,6 +9,7 @@ Create one task-specific folder with this structure:
 ```text
 project-name/
 ├── source-script.txt
+├── art-direction-selection.json
 ├── slide-manifest.json
 ├── slide-manifest.md
 ├── style-anchor.png
@@ -49,6 +50,8 @@ Every `slide-manifest.json` slide must contain:
 - `generation_model`
 - `generation_route`
 - `status`
+
+The top-level `project` object must contain `art_direction_profile` with exactly `simple-cute` or `full-color-expressive`. Record the explicit user choice and public comparison URL in `art-direction-selection.json`. Do not generate images while either record is missing or inconsistent.
 
 The readable Markdown plan must use the exact column heading **Voiceover reads on this image**.
 
@@ -111,15 +114,16 @@ Never expose the GenMedia configuration or API key.
 
 ## Consistency workflow
 
-1. Generate a project style anchor containing the protagonist, supporting roles, animals, recurring props, palette, line examples, and the 3×3 expression grid.
-2. Generate three proof slides:
+1. Confirm the explicit `simple-cute` or `full-color-expressive` selection and load only that profile's reference pack.
+2. Generate a project style anchor containing the protagonist, supporting roles, animals, recurring props, palette, line examples, and the 3×3 expression grid.
+3. Generate three proof slides:
    - one single narrative scene;
    - one 2×2 grid;
    - one text-light diagram or timeline.
-3. Obtain approval before generating a large paid batch.
-4. Use the approved style anchor as a reference input whenever the endpoint supports it.
-5. Keep the same model, aspect ratio, style block, character description, and reference inputs across the batch.
-6. Generate in small batches and run QA before continuing.
+4. Obtain approval before generating a large paid batch.
+5. Use the approved style anchor as a reference input whenever the endpoint supports it.
+6. Keep the same model, profile, aspect ratio, style block, character description, and reference inputs across the batch.
+7. Generate in small batches and run QA before continuing.
 
 ## QA per image
 

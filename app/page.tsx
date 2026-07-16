@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 const GITHUB_URL =
   "https://github.com/mikefilsaime-groove/stickman-vsl-director";
@@ -10,6 +10,7 @@ const VIDEO_URL = "https://www.youtube.com/watch?v=nv7HuwnofW0";
 
 const tabs = [
   { id: "overview", label: "Overview" },
+  { id: "styles", label: "Compare Styles" },
   { id: "workflow", label: "Workflow" },
   { id: "visual-system", label: "Visual System" },
   { id: "metrics", label: "Metrics" },
@@ -31,26 +32,31 @@ const metrics = [
 const workflow = [
   {
     number: "01",
+    title: "Choose the visual direction",
+    copy: "Review both complete example boards and select Simple & Cute or Full-Color & Expressive before art direction begins.",
+  },
+  {
+    number: "02",
     title: "Analyze the voiceover",
     copy: "Count every word and sentence, then preserve the exact wording as the timeline source of truth.",
   },
   {
-    number: "02",
+    number: "03",
     title: "Find the visual beats",
     copy: "Split on meaning, emotion, contrast, proof, and pacing—not on arbitrary word counts.",
   },
   {
-    number: "03",
+    number: "04",
     title: "Choose the concept",
     copy: "Turn each beat into one readable metaphor, expression, grid, diagram, or miniature scene.",
   },
   {
-    number: "04",
+    number: "05",
     title: "Direct GPT Image 2",
     copy: "Generate through the Codex subscription by default, keeping character, line, palette, and composition consistent.",
   },
   {
-    number: "05",
+    number: "06",
     title: "Hand off the timeline",
     copy: "Deliver numbered slides with the precise words read over each image, plus timing and production notes.",
   },
@@ -176,6 +182,12 @@ export default function Home() {
   const [activeTab, setActiveTab] = useState<TabId>("overview");
   const tabRefs = useRef<Array<HTMLButtonElement | null>>([]);
 
+  useEffect(() => {
+    const hash = window.location.hash.slice(1);
+    const match = tabs.find((tab) => tab.id === hash);
+    if (match) setActiveTab(match.id);
+  }, []);
+
   function chooseTab(id: TabId) {
     setActiveTab(id);
     window.history.replaceState(null, "", `#${id}`);
@@ -225,17 +237,18 @@ export default function Home() {
             how it should look, and the exact voiceover it owns.
           </p>
           <div className="hero-actions">
-            <button type="button" className="button button-primary" onClick={() => chooseTab("installation")}>
-              Install the skill <span aria-hidden="true">→</span>
+            <button type="button" className="button button-primary" onClick={() => chooseTab("styles")}>
+              Compare the two styles <span aria-hidden="true">→</span>
             </button>
-            <button type="button" className="button button-secondary" onClick={() => chooseTab("example")}>
-              See the reference study
+            <button type="button" className="button button-secondary" onClick={() => chooseTab("installation")}>
+              Install the skill
             </button>
           </div>
           <ul className="hero-proof" aria-label="Key capabilities">
             <li><span>✓</span> Scene-by-scene prompts</li>
             <li><span>✓</span> Exact voiceover mapping</li>
             <li><span>✓</span> Editable slide timeline</li>
+            <li><span>✓</span> Two complete art workflows</li>
           </ul>
         </div>
         <HeroStoryboard />
@@ -313,7 +326,7 @@ export default function Home() {
             {activeTab === "workflow" && (
               <div className="workflow-panel">
                 <div className="panel-intro">
-                  <p className="panel-kicker">THE FIVE-PASS PIPELINE</p>
+                  <p className="panel-kicker">THE SIX-PASS PIPELINE</p>
                   <h3>From spoken copy to visual direction.</h3>
                 </div>
                 <ol className="workflow-list">
@@ -324,6 +337,75 @@ export default function Home() {
                     </li>
                   ))}
                 </ol>
+              </div>
+            )}
+
+            {activeTab === "styles" && (
+              <div className="styles-panel">
+                <div className="styles-intro">
+                  <div>
+                    <p className="panel-kicker">CHOOSE BEFORE GENERATION</p>
+                    <h3>Same script. Two proven visual personalities.</h3>
+                  </div>
+                  <p>
+                    The skill now pauses before art direction and asks which world you want.
+                    Both examples below use the same two-minute voiceover and the same 23-slide timing plan.
+                  </p>
+                </div>
+
+                <div className="style-choice-grid">
+                  <article className="style-choice simple-choice">
+                    <div className="style-choice-heading">
+                      <span className="option-number">OPTION 1</span>
+                      <div><h4>Simple &amp; Cute</h4><span className="style-alias">Warm · minimal · charming</span></div>
+                    </div>
+                    <p>
+                      A warm storybook treatment with cream backgrounds, generous open space,
+                      restrained accent colors, a compact blue-body character, and softer rounded
+                      expressions. It feels friendly, clear, and charming, with fewer environmental
+                      details competing with the message.
+                    </p>
+                    <ul className="style-traits">
+                      <li>Cream stage-like backgrounds</li>
+                      <li>Blue rectangular torso</li>
+                      <li>Cleaner, quieter compositions</li>
+                      <li>Cute and gently humorous faces</li>
+                    </ul>
+                    <div className="storyboard-pages">
+                      <img src="/storyboards/simple-cute-01.webp" alt="Simple and Cute storyboard, slides 1 through 12" loading="lazy" />
+                      <img src="/storyboards/simple-cute-02.webp" alt="Simple and Cute storyboard, slides 13 through 23" loading="lazy" />
+                    </div>
+                  </article>
+
+                  <article className="style-choice expressive-choice">
+                    <div className="style-choice-heading">
+                      <span className="option-number">OPTION 2</span>
+                      <div><h4>Full-Color &amp; Expressive</h4><span className="style-alias">Energetic · vivid · humorous</span></div>
+                    </div>
+                    <p>
+                      A saturated explainer-cartoon treatment with full cyan, blue, green, and brown
+                      environments; true stick-figure bodies; larger emotional reactions; more physical
+                      comedy; and denser visual storytelling. It feels energetic, humorous, and closer
+                      to the source-video world.
+                    </p>
+                    <ul className="style-traits">
+                      <li>Full-color environmental backgrounds</li>
+                      <li>Thin true stick-figure bodies</li>
+                      <li>Richer metaphors and visual detail</li>
+                      <li>Bigger reactions and more comedy</li>
+                    </ul>
+                    <div className="storyboard-pages">
+                      <img src="/storyboards/full-color-expressive-01.webp" alt="Full-Color and Expressive storyboard, slides 1 through 12" loading="lazy" />
+                      <img src="/storyboards/full-color-expressive-02.webp" alt="Full-Color and Expressive storyboard, slides 13 through 23" loading="lazy" />
+                    </div>
+                  </article>
+                </div>
+
+                <div className="choice-rule">
+                  <span>THE SKILL WILL ASK</span>
+                  <strong>“Do you prefer Option 1 — Simple &amp; Cute, or Option 2 — Full-Color &amp; Expressive?”</strong>
+                  <p>No hidden default. Your answer locks the character sheet, palette, prompt system, and reference pack for the entire project.</p>
+                </div>
               </div>
             )}
 

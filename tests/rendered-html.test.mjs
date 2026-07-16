@@ -1,4 +1,5 @@
 import assert from "node:assert/strict";
+import { access } from "node:fs/promises";
 import test from "node:test";
 
 async function render() {
@@ -33,6 +34,7 @@ test("server-renders the complete public portal", async () => {
   assert.match(html, /timed visual storyboard/);
   assert.match(html, /GPT IMAGE 2 INCLUDED WITH YOUR CODEX SUBSCRIPTION/);
   assert.match(html, /Overview/);
+  assert.match(html, /Compare Styles/);
   assert.match(html, /Workflow/);
   assert.match(html, /Visual System/);
   assert.match(html, /Metrics/);
@@ -41,6 +43,17 @@ test("server-renders the complete public portal", async () => {
   assert.match(html, /mikefilsaime-groove\/stickman-vsl-director/);
   assert.match(html, /mikefilsaime-groove\/mikefilsaime-skills/);
   assert.match(html, /nv7HuwnofW0/);
+  assert.match(html, /Simple &amp; Cute/);
+  assert.match(html, /Full-Color &amp; Expressive/);
+});
+
+test("ships both complete storyboard comparisons", async () => {
+  await Promise.all([
+    access(new URL("../public/storyboards/simple-cute-01.webp", import.meta.url)),
+    access(new URL("../public/storyboards/simple-cute-02.webp", import.meta.url)),
+    access(new URL("../public/storyboards/full-color-expressive-01.webp", import.meta.url)),
+    access(new URL("../public/storyboards/full-color-expressive-02.webp", import.meta.url)),
+  ]);
 });
 
 test("removes the disposable starter experience", async () => {

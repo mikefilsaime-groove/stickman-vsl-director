@@ -7,6 +7,7 @@ import argparse
 import json
 import math
 import re
+from datetime import datetime, timezone
 from pathlib import Path
 
 
@@ -157,6 +158,8 @@ def make_plan(
     model: str,
     generation_route: str,
     timed_words: list[dict] | None,
+    art_direction_profile: str,
+    art_direction_selection_note: str,
 ) -> dict:
     tokens = tokenize(text)
     if not tokens:
@@ -227,6 +230,8 @@ def make_plan(
             "reference_images_per_minute": 11.453,
             "default_model": model,
             "default_generation_route": generation_route,
+            "art_direction_profile": art_direction_profile,
+            "art_direction_selection_note": art_direction_selection_note,
         },
         "slides": slides,
     }
@@ -241,6 +246,7 @@ def markdown_plan(plan: dict) -> str:
         f"- Slides: {project['slide_count']}",
         f"- Duration: {format_time(project['duration_seconds'])}",
         f"- Model: {project['default_model']}",
+        f"- Art direction: {project['art_direction_profile']}",
         "",
         "## Slide Manifest",
         "",
@@ -269,6 +275,12 @@ def main() -> None:
     parser.add_argument("--timed-words", type=Path)
     parser.add_argument("--model", default="gpt-image-2")
     parser.add_argument("--generation-route", default="codex-built-in-image-gen")
+    parser.add_argument(
+        "--art-direction-profile",
+        required=True,
+        choices=("simple-cute", "full-color-expressive"),
+    )
+    parser.add_argument("--art-direction-selection-note", required=True)
     args = parser.parse_args()
 
     text = args.script.read_text(encoding="utf-8-sig").strip()
@@ -284,14 +296,31 @@ def main() -> None:
         model=args.model,
         generation_route=args.generation_route,
         timed_words=timed_words,
+        art_direction_profile=args.art_direction_profile,
+        art_direction_selection_note=args.art_direction_selection_note,
     )
     args.output_dir.mkdir(parents=True, exist_ok=True)
     json_path = args.output_dir / "slide-manifest.json"
     md_path = args.output_dir / "slide-manifest.md"
+    selection_path = args.output_dir / "art-direction-selection.json"
     json_path.write_text(json.dumps(plan, indent=2, ensure_ascii=False) + "\n")
     md_path.write_text(markdown_plan(plan), encoding="utf-8")
+    selection_path.write_text(
+        json.dumps(
+            {
+                "profile": args.art_direction_profile,
+                "selection_source": "explicit-user-choice",
+                "selection_note": args.art_direction_selection_note,
+                "selected_at_utc": datetime.now(timezone.utc).isoformat(),
+                "comparison_url": "https://stickman-vsl-director.mikefilsaime.chatgpt.site/#styles",
+            },
+            indent=2,
+        )
+        + "\n"
+    )
     print(f"Slide manifest: {json_path}")
     print(f"Readable plan: {md_path}")
+    print(f"Art-direction selection: {selection_path}")
 
 
 if __name__ == "__main__":

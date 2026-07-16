@@ -592,7 +592,7 @@ h1 em,
 .tab-list {
   padding: 10px;
   display: grid;
-  grid-template-columns: repeat(6, 1fr);
+  grid-template-columns: repeat(7, 1fr);
   gap: 3px;
   border-bottom: 1px solid var(--line);
   background: #f1f3f7;
@@ -745,7 +745,7 @@ h1 em,
   margin: 0;
   padding: 0;
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: repeat(6, 1fr);
   list-style: none;
 }
 
@@ -1052,6 +1052,146 @@ h1 em,
   text-underline-offset: 4px;
 }
 
+.styles-panel {
+  display: grid;
+  gap: 28px;
+}
+
+.styles-intro {
+  display: grid;
+  grid-template-columns: minmax(0, .9fr) minmax(280px, .7fr);
+  align-items: end;
+  gap: 48px;
+}
+
+.styles-intro > p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.7;
+}
+
+.style-choice-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.style-choice {
+  min-width: 0;
+  padding: 20px;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  background: #fff;
+}
+
+.simple-choice {
+  background: linear-gradient(180deg, #fffdf5 0%, #fff 24%);
+}
+
+.expressive-choice {
+  background: linear-gradient(180deg, #eefaff 0%, #fff 24%);
+}
+
+.style-choice-heading {
+  margin-bottom: 15px;
+  display: flex;
+  align-items: center;
+  gap: 13px;
+}
+
+.option-number {
+  padding: 7px 9px;
+  border-radius: 7px;
+  background: var(--navy);
+  color: #fff;
+  font-size: 8px;
+  font-weight: 900;
+  letter-spacing: .12em;
+}
+
+.expressive-choice .option-number { background: var(--red); }
+
+.style-choice h4 {
+  margin: 0 0 2px;
+  color: var(--navy);
+  font-size: 21px;
+  letter-spacing: -.025em;
+}
+
+.style-alias {
+  color: var(--muted);
+  font-size: 9px;
+  font-weight: 780;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+}
+
+.style-choice > p {
+  min-height: 118px;
+  margin-bottom: 15px;
+  color: #556171;
+  font-size: 12px;
+  line-height: 1.7;
+}
+
+.style-traits {
+  margin: 0 0 18px;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 7px;
+  list-style: none;
+}
+
+.style-traits li {
+  padding: 9px 10px;
+  border-radius: 8px;
+  background: rgba(11, 31, 69, .055);
+  color: var(--navy);
+  font-size: 9px;
+  font-weight: 760;
+}
+
+.storyboard-pages {
+  display: grid;
+  gap: 10px;
+}
+
+.storyboard-pages img {
+  width: 100%;
+  height: auto;
+  display: block;
+  border: 1px solid rgba(11, 31, 69, .13);
+  border-radius: 10px;
+  background: var(--navy);
+}
+
+.choice-rule {
+  padding: 21px 23px;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: center;
+  gap: 7px 18px;
+  border-radius: 15px;
+  background: var(--navy);
+  color: #fff;
+}
+
+.choice-rule > span {
+  grid-row: 1 / 3;
+  padding: 7px 9px;
+  border-radius: 7px;
+  background: var(--red);
+  font-size: 8px;
+  font-weight: 900;
+  letter-spacing: .11em;
+}
+
+.choice-rule strong { font-size: 13px; }
+.choice-rule p { margin: 0; color: rgba(255,255,255,.65); font-size: 10px; }
+
 .install-panel .panel-intro {
   display: grid;
   grid-template-columns: 0.85fr 1fr;
@@ -1227,6 +1367,7 @@ footer nav a {
   .workflow-list li { border: 1px solid var(--line); border-top: 3px solid var(--navy); border-radius: 12px !important; }
   .layout-grid { grid-template-columns: repeat(2, 1fr); }
   .model-route { align-items: flex-start; flex-wrap: wrap; }
+  .style-choice > p { min-height: 140px; }
   .model-route > span:last-child { width: 100%; margin-left: 0; }
 }
 
@@ -1264,6 +1405,12 @@ footer nav a {
   .tab-panel { min-height: 0; padding: 31px 20px; }
   .panel-grid,
   .example-panel { grid-template-columns: 1fr; gap: 35px; }
+  .styles-intro,
+  .style-choice-grid { grid-template-columns: 1fr; }
+  .styles-intro { gap: 12px; }
+  .style-choice > p { min-height: 0; }
+  .choice-rule { grid-template-columns: 1fr; }
+  .choice-rule > span { grid-row: auto; width: fit-content; }
   .workflow-list { grid-template-columns: 1fr; }
   .workflow-list li { min-height: 0; }
   .workflow-list li > span { margin-bottom: 19px; }
@@ -1294,6 +1441,8 @@ footer nav a {
   .layout-grid { grid-template-columns: 1fr; }
   .metric-grid { grid-template-columns: 1fr 1fr; }
   .faces { transform: scale(.88); transform-origin: left center; }
+  .style-choice { padding: 14px; }
+  .style-traits { grid-template-columns: 1fr; }
 }
 
 @media (prefers-reduced-motion: reduce) {

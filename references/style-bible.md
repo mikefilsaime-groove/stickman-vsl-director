@@ -2,21 +2,23 @@
 
 Use this reference when choosing concepts, writing prompts, checking continuity, or judging generated images.
 
+Apply the selected profile in `art-direction-profiles.md` first. When a profile rule conflicts with this shared grammar, the profile wins.
+
 ## Visual identity
 
 - Canvas: 16:9 landscape, normally 1920×1080. Keep essential content inside a 5% safe area.
 - Medium: flat 2D digital cartoon with an intentionally hand-drawn finish.
-- People: thin black stick limbs and torsos, white circular heads, black facial marks, little or no clothing unless role recognition requires it.
+- People: white circular heads and black facial marks; use either the blue rectangular torso or thin stick torso defined by the selected profile.
 - Animals: simplified colored cartoon bodies with heavier outlines and slightly more anatomical detail than the people.
 - Line: black, confident, slightly uneven, medium-thick. Avoid delicate sketching and realistic contours.
 - Fill: broad flat colors. Avoid realistic lighting, gradients, airbrushing, 3D form, and painterly texture.
-- Background: saturated edge-to-edge environments made from sky/ground blocks, trees, campfires, tents, caves, or simple buildings. Keep simple scenes sparse, but allow crowded camps, evidence tables, breed groups, and dense boards when the concept requires them.
+- Background: use the selected profile's cream stage or saturated edge-to-edge environment. Keep simple scenes sparse; allow denser boards only when the concept requires them.
 - Typography: imperfect uppercase hand lettering on white boards, cream cards, signs, arrows, and labels. Keep it short and legible.
 - Tone: educational, playful, lightly absurd, emotionally clear, never visually luxurious.
 
 ## Core palette
 
-Use a small recurring palette rather than choosing new colors per slide.
+Use a small recurring palette rather than choosing new colors per slide. The selected profile determines how much of the frame each color occupies.
 
 | Role | Suggested color |
 |---|---|
@@ -151,7 +153,7 @@ Use for imagined motives, anthropomorphism, a joke, or internal conflict. Keep b
 Use this order so the model sees style before detail:
 
 ```text
-16:9 flat 2D hand-drawn stickman educational cartoon. Thick slightly uneven black outlines; white circular stick-figure heads and thin black limbs; simple colored cartoon animals; broad flat fills; saturated edge-to-edge cyan, royal-blue, green, brown, cream, red, and yellow palette; playful educational tone.
+[Insert the exact selected-profile style block from art-direction-profiles.md.]
 
 LAYOUT: [single scene / reaction close-up / split comparison / 2x2 grid / four-column progression / diagram / timeline / map / board within scene].
 

@@ -1,6 +1,6 @@
 # Visual Reference Atlas Routing
 
-Use this reference only when planning or generating images in the analyzed stickman direction.
+Use this reference only when the selected art-direction profile is `full-color-expressive`. Do not use this atlas for `simple-cute` generations.
 
 ## Included evidence
 
