@@ -19,6 +19,7 @@ project-name/
 │   ├── slide-0001.png
 │   └── ...
 ├── qa-report.md
+├── storyboard-approval.json  # only after explicit post-review approval
 ├── timeline.ffconcat
 └── final-slideshow.mp4        # only when rendering is requested
 ```
@@ -153,7 +154,16 @@ Transcribe or align the final audio to word-level timestamps first. Pass a JSON 
 
 ### Rendering
 
-After all images pass QA, run `scripts/render_slideshow.py` with the manifest, images folder, and optional final audio. The renderer uses each manifest duration and direct cuts, matching the reference's static-slide editorial language.
+Rendering has a mandatory post-storyboard approval gate:
+
+1. Complete and QA all slides.
+2. Present a timed review deck containing every numbered slide and its exact **Voiceover reads on this image** span.
+3. Stop and ask the user for changes or the exact approval phrase: **I approve this storyboard for video rendering.**
+4. Revise and re-present when changes are requested.
+5. Only after explicit approval of the latest storyboard, run `scripts/approve_storyboard.py --confirm-user-approved` to bind the approval to the current manifest hash.
+6. Run `scripts/render_slideshow.py` with the manifest, images folder, and optional final audio.
+
+The renderer refuses to create video without a valid approval receipt. Any manifest change invalidates the receipt and requires another user review. `--check-only` may run before approval because it validates inputs without rendering.
 
 ## Completion definition
 
@@ -164,4 +174,6 @@ Do not call a project complete until:
 - image count and duration are reconciled;
 - the first and final frames are intentional;
 - all labels pass proofreading;
+- the latest timed storyboard was presented and explicitly approved by the user;
+- `storyboard-approval.json` matches the exact current manifest;
 - the rendered timeline, when requested, matches the final voiceover duration.

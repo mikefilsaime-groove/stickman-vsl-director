@@ -22,8 +22,8 @@ Infer the narrowest useful scope from the request:
 
 1. **Analyze only:** measure a new reference video and report its visual grammar.
 2. **Plan only:** create a timed, fully art-directed manifest and prompts without paid generation.
-3. **Generate:** create the style anchor, proof slides, approved image batch, and QA report.
-4. **Produce:** generate images and render the slide sequence with final voiceover audio.
+3. **Generate:** create the style anchor, proof slides, completed image batch, QA report, and timed storyboard review deck; then stop for user review.
+4. **Produce:** only after explicit post-storyboard approval, record the approval and render the slide sequence with final voiceover audio.
 
 Do not generate paid images or render a video when the user requested only a storyboard or prompt plan.
 
@@ -129,9 +129,37 @@ Check concept clarity, expression, continuity, grid structure, palette, line sty
 
 Create `qa-report.md` listing each slide as approved, revised, or blocked. Do not mark the batch complete while any manifest field or required image is missing.
 
+## Enforce the storyboard approval gate
+
+Treat storyboard review as a mandatory human checkpoint before every video render, even when the initial request asks for end-to-end production or says to proceed automatically.
+
+1. Finish and QA every numbered slide first.
+2. Create a review deck or equivalent contact-sheet presentation that shows, for every slide:
+   - the image;
+   - slide number and exact in/out time;
+   - the exact **Voiceover reads on this image** span;
+   - the visual concept and layout.
+3. Present the storyboard to the user and end the turn with this unambiguous request:
+
+   **Please review the storyboard and tell me any changes you want. If none, reply: “I approve this storyboard for video rendering.”**
+
+4. Do not render, queue, or begin composing the video in the storyboard-delivery turn.
+5. If the user requests changes, revise only the affected slides, update timing when needed, regenerate the review deck, and ask for approval again.
+6. Accept approval only from an explicit user response after the latest storyboard was presented. Do not infer approval from the original brief, prior general permission, silence, or a request to work autonomously.
+7. After explicit approval, record it against the exact manifest before rendering:
+
+```bash
+python3 scripts/approve_storyboard.py \
+  --manifest /absolute/path/project/slide-manifest.json \
+  --confirm-user-approved \
+  --approval-note "User explicitly approved the presented storyboard."
+```
+
+This creates `storyboard-approval.json` beside the manifest. Approval is invalidated automatically if the manifest changes; present the revised storyboard and obtain approval again.
+
 ## Render when requested
 
-After all images pass QA, verify or render the direct-cut timeline:
+After all images pass QA **and** the user explicitly approves the presented storyboard, verify or render the direct-cut timeline:
 
 ```bash
 python3 scripts/render_slideshow.py \
@@ -142,6 +170,8 @@ python3 scripts/render_slideshow.py \
 ```
 
 Use `--check-only` to verify image completeness and timeline duration without rendering. Keep slides static and use hard cuts unless the user requests a different motion treatment.
+
+The renderer requires a valid `storyboard-approval.json` for every actual render. It has no approval bypass. `--check-only` remains available before approval because it does not create a video.
 
 ## Analyze another reference
 
