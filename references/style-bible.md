@@ -10,7 +10,7 @@ Use this reference when choosing concepts, writing prompts, checking continuity,
 - Animals: simplified colored cartoon bodies with heavier outlines and slightly more anatomical detail than the people.
 - Line: black, confident, slightly uneven, medium-thick. Avoid delicate sketching and realistic contours.
 - Fill: broad flat colors. Avoid realistic lighting, gradients, airbrushing, 3D form, and painterly texture.
-- Background: sparse stage-like environments made from a horizon, sky/ground blocks, one or two trees, a campfire, a tent, a cave, or a simple building.
+- Background: saturated edge-to-edge environments made from sky/ground blocks, trees, campfires, tents, caves, or simple buildings. Keep simple scenes sparse, but allow crowded camps, evidence tables, breed groups, and dense boards when the concept requires them.
 - Typography: imperfect uppercase hand lettering on white boards, cream cards, signs, arrows, and labels. Keep it short and legible.
 - Tone: educational, playful, lightly absurd, emotionally clear, never visually luxurious.
 
@@ -20,17 +20,18 @@ Use a small recurring palette rather than choosing new colors per slide.
 
 | Role | Suggested color |
 |---|---|
-| Day sky | `#4AAFE5` |
-| Night sky | `#263D7B` |
-| Grass | `#35AF36` |
-| Earth | `#8B4F2D` |
+| Day sky | `#5CBED7` |
+| Night sky | `#31468E` |
+| Deep night | `#142158` |
+| Grass | `#38A83C` |
+| Earth | `#643C19` |
 | Tree canopy | `#2EA936` |
 | Tree trunk | `#713D24` |
 | Wolf | `#8A8A86` |
 | Dog/fox accents | `#C9783A` / `#F07728` |
-| Paper/card | `#F4F0D8` |
-| Fire | `#FFB31A` with `#F15A24` outline/accent |
-| Emphasis | red `#E12727`, yellow `#FFD52B`, black `#111111` |
+| Paper/card | `#F1EEDB` |
+| Fire | orange `#F07D1F` with yellow `#FFD43B` |
+| Emphasis | red `#D92B2B`, yellow `#FFD43B`, black `#0C111B` |
 
 Night scenes may add a soft circular fire glow or edge vignette. Treat that as the exception to flat lighting.
 
@@ -150,7 +151,7 @@ Use for imagined motives, anthropomorphism, a joke, or internal conflict. Keep b
 Use this order so the model sees style before detail:
 
 ```text
-16:9 flat 2D hand-drawn stickman educational cartoon. Thick slightly uneven black outlines; white circular stick-figure heads and thin black limbs; simple colored cartoon animals; broad flat fills; sparse stage-like background; limited cyan, indigo, green, brown, cream, red, and yellow palette; playful educational tone.
+16:9 flat 2D hand-drawn stickman educational cartoon. Thick slightly uneven black outlines; white circular stick-figure heads and thin black limbs; simple colored cartoon animals; broad flat fills; saturated edge-to-edge cyan, royal-blue, green, brown, cream, red, and yellow palette; playful educational tone.
 
 LAYOUT: [single scene / reaction close-up / split comparison / 2x2 grid / four-column progression / diagram / timeline / map / board within scene].
 
@@ -160,7 +161,7 @@ CHARACTERS AND EXPRESSIONS: [who appears, continuity identity, face, pose, gaze,
 
 PROPS AND LABELS: [only essential objects; exact short text in quotes or state “no text”].
 
-COMPOSITION: strong readable silhouettes, generous empty space, one dominant focal point, safe margins, no cropped heads or labels.
+COMPOSITION: strong readable silhouettes, large subjects, obvious focal hierarchy, density matched to the concept, safe margins, no accidentally cropped heads or labels.
 
 Avoid photorealism, 3D rendering, gradients, detailed anatomy, painterly texture, cinematic realism, clutter, illegible text, watermarks, and logos.
 ```

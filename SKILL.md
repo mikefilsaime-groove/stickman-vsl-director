@@ -13,6 +13,7 @@ Read both references before planning:
 
 - `references/style-bible.md` for style, expression, concept, layout, prompting, and QA rules.
 - `references/reference-calibration.md` for measured pacing and narration/image ratios.
+- `references/style-atlas/reference-atlas.md` before image generation so the correct visual references are attached without loading the full atlas unnecessarily.
 
 Read `references/production-contract.md` before generating images, handing off to GenMedia, or rendering a slideshow.
 
@@ -94,6 +95,19 @@ Use a deliberate composition rhythm:
 - closing payoff → simple emotional frame with longer hold.
 
 Preserve the exact heading **Voiceover reads on this image** in the readable manifest.
+
+## Route the visual reference pack
+
+Before the first image-generation call, read `references/style-atlas/reference-atlas.md` and use its page-routing table.
+
+- Always include `references/style-atlas/model-ready-palette-and-style-lock.jpg`.
+- Add the core-character, animal, and environment pages required by the current slide.
+- Add only one structural page for panels, diagrams, comedy, emotion, or dense educational boards.
+- Prefer 2–4 relevant reference images per generation. Do not attach the 20-page complete atlas to every request.
+- Use `references/style-atlas/model-ready-manifest.csv` to locate a more specific individual frame when a slide needs an exact expression, animal, environment, or layout reference.
+- Treat `references/style-atlas/original-video-complete-slide-atlas.pdf` as the searchable evidence library, not the default generation payload.
+
+Use references as art direction and continuity guidance. Generate a new original scene for the user's script; do not reproduce an individual source frame literally.
 
 ## Freeze continuity before batch generation
 

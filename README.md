@@ -41,6 +41,17 @@ The included calibration study was measured from the example video—not estimat
 
 These numbers calibrate pacing. They are not a rigid formula: the skill changes visuals at semantic and emotional beats.
 
+## Visual Reference Atlas
+
+The repository includes the complete visual study behind the style direction:
+
+- [Model-ready character and style reference](references/style-atlas/model-ready-character-style-reference.pdf): a palette/style-lock page plus eight curated visual-grammar pages.
+- [Complete 233-slide atlas](references/style-atlas/original-video-complete-slide-atlas.pdf): all distinct source slides arranged 3×4 across 20 pages.
+- [Reference routing guide](references/style-atlas/reference-atlas.md): tells the agent which 2–4 references to attach for characters, environments, panels, diagrams, comedy, emotion, or dense boards.
+- `model-ready-pages/` and `individual-frames/`: JPEG references for models that work better with selected images than a multipage PDF.
+
+The full atlas is a searchable library. The skill uses the smaller routed reference set for generation so image inputs stay focused.
+
 ## How Concept Selection Works
 
 For every voiceover beat, the skill identifies:
@@ -95,6 +106,12 @@ references/
   production-contract.md
   reference-calibration.md
   style-bible.md
+  style-atlas/
+    reference-atlas.md
+    model-ready-character-style-reference.pdf
+    original-video-complete-slide-atlas.pdf
+    model-ready-pages/
+    individual-frames/
 scripts/
   analyze_reference.py
   plan_slides.py
