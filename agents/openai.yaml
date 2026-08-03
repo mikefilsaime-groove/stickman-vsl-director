@@ -1,4 +1,4 @@
 interface:
   display_name: "Stickman VSL Director"
-  short_description: "Build timed VSLs in two stickman styles"
-  default_prompt: "Use $stickman-vsl-director to ask me which visual style I prefer, then turn this VSL into a timed, image-ready storyboard."
+  short_description: "Build frame-verified VSLs in two styles"
+  default_prompt: "Use $stickman-vsl-director to ask which visual style I prefer, create the timed storyboard, and render every approved slide with frame-accurate verification."

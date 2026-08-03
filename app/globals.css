@@ -1192,6 +1192,8 @@ h1 em,
 .choice-rule strong { font-size: 13px; }
 .choice-rule p { margin: 0; color: rgba(255,255,255,.65); font-size: 10px; }
 
+.render-rule { margin-top: 22px; }
+
 .install-panel .panel-intro {
   display: grid;
   grid-template-columns: 0.85fr 1fr;

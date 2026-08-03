@@ -57,8 +57,8 @@ const workflow = [
   },
   {
     number: "06",
-    title: "Hand off the timeline",
-    copy: "Deliver numbered slides with the precise words read over each image, plus timing and production notes.",
+    title: "Render and prove every slide",
+    copy: "After storyboard approval, encode every slide as CFR frames and reject the MP4 unless all source-image and frame-count checks pass.",
   },
 ];
 
@@ -212,7 +212,7 @@ export default function Home() {
     <main>
       <div className="announcement">
         <span>OPEN-SOURCE CODEX SKILL</span>
-        <span>GPT IMAGE 2 INCLUDED WITH YOUR CODEX SUBSCRIPTION</span>
+        <span>GPT IMAGE 2 INCLUDED · EVERY RENDERED SLIDE VERIFIED</span>
       </div>
 
       <header className="site-header">
@@ -249,6 +249,7 @@ export default function Home() {
             <li><span>✓</span> Exact voiceover mapping</li>
             <li><span>✓</span> Editable slide timeline</li>
             <li><span>✓</span> Two complete art workflows</li>
+            <li><span>✓</span> Frame-accurate video QA</li>
           </ul>
         </div>
         <HeroStoryboard />
@@ -317,7 +318,7 @@ export default function Home() {
                   </article>
                   <article>
                     <span>03</span>
-                    <div><h4>Production ownership</h4><p>Each numbered slide carries its voiceover, prompt, duration, and QA notes.</p></div>
+                    <div><h4>Verified production ownership</h4><p>Every numbered slide carries its voiceover, prompt, duration, CFR frames, and decoded QA evidence.</p></div>
                   </article>
                 </div>
               </div>
@@ -337,6 +338,11 @@ export default function Home() {
                     </li>
                   ))}
                 </ol>
+                <div className="choice-rule render-rule">
+                  <span>FRAME-ACCURATE CFR RENDERING</span>
+                  <strong>Every approved storyboard slide must survive the final encode.</strong>
+                  <p>The renderer checks the exact frame count, one slide-start keyframe per image, and decoded start, midpoint, and end samples for every slide. Any mismatch blocks delivery.</p>
+                </div>
               </div>
             )}
 
@@ -512,7 +518,8 @@ export default function Home() {
                     <blockquote>
                       Use $stickman-vsl-director on this script. Create a timed slide
                       manifest, quote the exact voiceover for every image, and render
-                      with GPT Image 2 through my Codex subscription.
+                      with GPT Image 2 through my Codex subscription. Verify every
+                      approved slide in the final CFR video.
                     </blockquote>
                   </section>
                 </div>
