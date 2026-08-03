@@ -4,7 +4,7 @@ import "./globals.css";
 
 const title = "Stickman VSL Director — Script-to-Storyboard Skill";
 const description =
-  "Turn any video sales letter into a timed, image-by-image production plan, with a choice between Simple & Cute and Full-Color & Expressive art direction.";
+  "Turn any video sales letter into a timed, image-by-image production plan with two art directions and frame-verified CFR video rendering.";
 
 export async function generateMetadata(): Promise<Metadata> {
   const requestHeaders = await headers();

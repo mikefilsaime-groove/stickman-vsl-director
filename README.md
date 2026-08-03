@@ -29,7 +29,21 @@ The skill produces:
 - A visual concept and emotional job for each slide.
 - Model-ready image prompts with continuity constraints.
 - Layout direction for single scenes, contrasts, grids, timelines, and diagrams.
-- A production contract that can be rendered into a timed slideshow.
+- A production contract that renders every approved slide into a frame-verified CFR slideshow.
+
+## Frame-Accurate Rendering Guarantee
+
+The renderer fails closed instead of trusting container duration alone. It gives every approved storyboard slide an explicit integer frame range, encodes each slide as an independent constant-frame-rate segment with its own keyframe, and concatenates those verified segments without re-timing.
+
+Before replacing the requested MP4, it automatically proves:
+
+- the decoded video frame count equals `floor(manifest duration × FPS)`;
+- nominal and average frame rate are both strict CFR;
+- slide-start keyframes equal the manifest slide count;
+- the decoded start, midpoint, and end of every interval match that slide's source image;
+- the complete video and audio streams decode without errors.
+
+The evidence is saved beside the video as `final-slideshow.verification.json`. A missing, skipped, duplicated, or over-held slide makes the render fail rather than silently producing a bad deliverable.
 
 ## Reference Calibration
 
@@ -127,6 +141,7 @@ scripts/
   analyze_reference.py
   plan_slides.py
   render_slideshow.py
+  verify_slideshow.py
 ```
 
 The profile reference anchors live in `references/art-direction-profiles/`. The Full-Color & Expressive workflow additionally uses the routed source-video atlas.
@@ -140,6 +155,8 @@ The repository also contains the source for the public tabbed portal in `app/`.
 | GPT Image 2 via Codex | Default. Uses the image generation included with the Codex subscription. |
 | Gen Media | Optional. Use when a named external model or specialized capability is requested. |
 | Planning only | Produces the complete manifest without generating images. |
+
+Approved slideshow production always uses the bundled frame-counted CFR renderer and automatic all-slide verification, regardless of which image-generation route produced the slides.
 
 ## Skill Hub
 

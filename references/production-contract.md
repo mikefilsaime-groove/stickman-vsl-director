@@ -22,6 +22,8 @@ project-name/
 ├── qa-report.md
 ├── storyboard-approval.json  # only after explicit post-review approval
 ├── timeline.ffconcat
+├── final-slideshow.frame-allocation.json
+├── final-slideshow.verification.json
 └── final-slideshow.mp4        # only when rendering is requested
 ```
 
@@ -166,8 +168,27 @@ Rendering has a mandatory post-storyboard approval gate:
 4. Revise and re-present when changes are requested.
 5. Only after explicit approval of the latest storyboard, run `scripts/approve_storyboard.py --confirm-user-approved` to bind the approval to the current manifest hash.
 6. Run `scripts/render_slideshow.py` with the manifest, images folder, and optional final audio.
+7. Require its automatic CFR, frame-count, keyframe, source-image, and full-decode verification to pass before delivering the MP4.
 
 The renderer refuses to create video without a valid approval receipt. Any manifest change invalidates the receipt and requires another user review. `--check-only` may run before approval because it validates inputs without rendering.
+
+### Frame-accurate render contract
+
+Never render the final slideshow by feeding still-image durations directly into one variable-frame-rate concat encode. That approach can preserve the container duration while omitting frames, holding some slides too long, and skipping other approved slides.
+
+Use the bundled renderer's fail-closed sequence:
+
+1. Convert every approved slide interval to an explicit integer frame range at the requested FPS.
+2. Encode each slide as an independent constant-frame-rate H.264 segment beginning with a keyframe.
+3. Verify every segment's frame count before concatenation.
+4. Concatenate segments without re-timing, then mux the final audio.
+5. Require the final video to contain exactly `floor(manifest duration × FPS)` decoded video frames.
+6. Require strict `30/1` average and nominal frame rate by default.
+7. Decode and compare the start, midpoint, and end frame of every slide interval against its source image.
+8. Require one slide-start keyframe per manifest slide and a clean full video/audio decode.
+9. Save the machine-readable evidence in `final-slideshow.verification.json`.
+
+Any failed invariant blocks delivery and must leave the prior verified output untouched.
 
 ## Completion definition
 
@@ -180,4 +201,6 @@ Do not call a project complete until:
 - all labels pass proofreading;
 - the latest timed storyboard was presented and explicitly approved by the user;
 - `storyboard-approval.json` matches the exact current manifest;
-- the rendered timeline, when requested, matches the final voiceover duration.
+- the rendered timeline, when requested, matches the final voiceover duration;
+- the final video frame count equals `floor(manifest duration × FPS)`;
+- the verification report proves every manifest slide at its start, midpoint, and end with zero failures.

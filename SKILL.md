@@ -1,6 +1,6 @@
 ---
 name: stickman-vsl-director
-description: Turn any video sales letter, narration, script, transcript, or voiceover into a timed slide-by-slide stickman explainer with a required choice between Simple & Cute and Full-Color & Expressive art direction. Use for VSL image planning, “voiceover reads on this image” manifests, facial-expression direction, 2×2 grids, comparison panels, timelines, infographic concepts, Codex subscription image generation with GPT Image 2 by default, optional GenMedia generation with Nano Banana 2/Pro, SeedDream 5.0, or another chosen model, and optional static-slide video rendering synchronized to audio.
+description: Turn any video sales letter, narration, script, transcript, or voiceover into a timed slide-by-slide stickman explainer with a required choice between Simple & Cute and Full-Color & Expressive art direction. Use for VSL image planning, “voiceover reads on this image” manifests, facial-expression direction, 2×2 grids, comparison panels, timelines, infographic concepts, Codex subscription image generation with GPT Image 2 by default, optional GenMedia generation with Nano Banana 2/Pro, SeedDream 5.0, or another chosen model, and frame-verified constant-frame-rate video rendering synchronized to audio.
 ---
 
 # Stickman VSL Director
@@ -200,6 +200,28 @@ python3 scripts/render_slideshow.py \
 Use `--check-only` to verify image completeness and timeline duration without rendering. Keep slides static and use hard cuts unless the user requests a different motion treatment.
 
 The renderer requires a valid `storyboard-approval.json` for every actual render. It has no approval bypass. `--check-only` remains available before approval because it does not create a video.
+
+Treat complete slide coverage as a non-negotiable render invariant:
+
+- allocate an explicit integer frame range to every manifest slide at the target FPS;
+- encode every slide as an independent CFR segment beginning with its own keyframe;
+- concatenate verified segments without re-timing them;
+- require `actual_video_frames == floor(manifest_duration × FPS)` and strict `30/1` CFR by default;
+- decode and compare the start, midpoint, and end of every slide interval to its source image;
+- require the keyframe count and source-image match count to equal the manifest slide count;
+- run a full video/audio decode and write `final-slideshow.verification.json`.
+
+The bundled renderer performs these checks automatically and exits nonzero before replacing the requested output when any invariant fails. Never deliver a render based only on matching duration, codec, or a sparse contact-sheet spot-check.
+
+To re-audit an existing output independently, run:
+
+```bash
+python3 scripts/verify_slideshow.py \
+  --video /absolute/path/project/final-slideshow.mp4 \
+  --manifest /absolute/path/project/slide-manifest.json \
+  --images-dir /absolute/path/project/images \
+  --expect-audio
+```
 
 ## Analyze another reference
 

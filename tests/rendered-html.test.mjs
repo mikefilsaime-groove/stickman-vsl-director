@@ -1,5 +1,5 @@
 import assert from "node:assert/strict";
-import { access } from "node:fs/promises";
+import { access, readFile } from "node:fs/promises";
 import test from "node:test";
 
 async function render() {
@@ -32,7 +32,8 @@ test("server-renders the complete public portal", async () => {
   assert.match(html, /<title>Stickman VSL Director/);
   assert.match(html, /Turn any script into a/);
   assert.match(html, /timed visual storyboard/);
-  assert.match(html, /GPT IMAGE 2 INCLUDED WITH YOUR CODEX SUBSCRIPTION/);
+  assert.match(html, /GPT IMAGE 2 INCLUDED/);
+  assert.match(html, /EVERY RENDERED SLIDE VERIFIED/);
   assert.match(html, /Overview/);
   assert.match(html, /Compare Styles/);
   assert.match(html, /Workflow/);
@@ -43,8 +44,15 @@ test("server-renders the complete public portal", async () => {
   assert.match(html, /mikefilsaime-groove\/stickman-vsl-director/);
   assert.match(html, /mikefilsaime-groove\/mikefilsaime-skills/);
   assert.match(html, /nv7HuwnofW0/);
-  assert.match(html, /Simple &amp; Cute/);
-  assert.match(html, /Full-Color &amp; Expressive/);
+});
+
+test("publishes the visual choices and frame-accurate render promise", async () => {
+  const source = await readFile(new URL("../app/page.tsx", import.meta.url), "utf8");
+  assert.match(source, /Simple & Cute/);
+  assert.match(source, /Full-Color & Expressive/);
+  assert.match(source, /FRAME-ACCURATE CFR RENDERING/);
+  assert.match(source, /Every approved storyboard slide must survive the final encode/);
+  assert.match(source, /start, midpoint, and end samples for every slide/);
 });
 
 test("ships both complete storyboard comparisons", async () => {
